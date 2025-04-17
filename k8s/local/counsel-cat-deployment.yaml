@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: counsel-cat-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: counsel-cat
+  template:
+    metadata:
+      labels:
+        app: counsel-cat
+    spec:
+      containers:
+        - name: counsel-cat
+          image: counsel-cat:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
+            - containerPort: 443

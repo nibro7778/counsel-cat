@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: counsel-cat
+  name: counsel-cat-service
 spec:
-  type: LoadBalancer
   selector:
     app: counsel-cat
   ports:
     - protocol: TCP
       port: 80
       targetPort: 80
+  type: LoadBalancer

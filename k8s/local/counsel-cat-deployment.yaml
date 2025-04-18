@@ -1,7 +1,7 @@
-apiVersion: apps/v1
+﻿apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: counsel-cat-deployment
+  name: counsel-cat
 spec:
   replicas: 1
   selector:
@@ -15,7 +15,11 @@ spec:
       containers:
         - name: counsel-cat
           image: counsel-cat:latest
-          imagePullPolicy: Never
+          imagePullPolicy: Never # 👈 prevents pulling from docker hub
           ports:
             - containerPort: 80
-            - containerPort: 443
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Development"
+            - name: ASPNETCORE_URLS
+              value: "http://+:80"

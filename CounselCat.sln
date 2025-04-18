@@ -7,14 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CounselCat", "CounselCat\Co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{417727C3-858F-4E57-9938-AF5BB520FDA9}"
 	ProjectSection(SolutionItems) = preProject
-		k8s\local\counsel-cat-deployment.yaml = k8s\local\counsel-cat-deployment.yaml
-		k8s\local\counsel-cat-service.yaml = k8s\local\counsel-cat-service.yaml
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "local", "local", "{E0EB6B83-7896-4E7D-8433-1F9F3181C237}"
-	ProjectSection(SolutionItems) = preProject
-		k8s\local\counsel-cat-deployment.yaml = k8s\local\counsel-cat-deployment.yaml
-		k8s\local\counsel-cat-service.yaml = k8s\local\counsel-cat-service.yaml
+		k8s\counsel-cat-deployment.yaml = k8s\counsel-cat-deployment.yaml
+		k8s\counsel-cat-service.yaml = k8s\counsel-cat-service.yaml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E83821F9-EA2C-414F-8592-E1ECCFEB7576}"

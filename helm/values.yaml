@@ -1,0 +1,16 @@
+replicaCount: 1
+
+image:
+  repository: counsel-cat
+  tag: latest
+  pullPolicy: Never
+
+service:
+  type: LoadBalancer
+  port: 80
+
+env:
+  ASPNETCORE_ENVIRONMENT: Development
+  ASPNETCORE_URLS: http://+:80
+
+resources: {}

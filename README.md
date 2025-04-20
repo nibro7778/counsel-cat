@@ -1,7 +1,7 @@
 
 # 🐱 Counsel Cat - ASP.NET Core Web API
 
-This is a sample ASP.NET Core 8.0 Web API project called **Counsel Cat**, containerized using Docker and deployed to a local Kubernetes cluster using **Minikube**.
+Counsel Cat is a sample ASP.NET Core Web API application containerized using Docker and deployed on Kubernetes. This guide provides step-by-step instructions for running the app locally using Docker and Kubernetes (via Minikube), and deploying it using Helm.
 
 ---
 
@@ -19,23 +19,27 @@ This is a sample ASP.NET Core 8.0 Web API project called **Counsel Cat**, contai
 
 Make sure you have the following installed:
 
-- [Docker](https://www.docker.com/products/docker-desktop/)
+- [.NET SDK](https://dotnet.microsoft.com/download)
+- [Docker](https://www.docker.com/)
 - [Minikube](https://minikube.sigs.k8s.io/docs/start/)
-- [kubectl](https://kubernetes.io/docs/tasks/tools/)
-- [.NET SDK 8.0](https://dotnet.microsoft.com/en-us/download)
+- [Kubectl](https://kubernetes.io/docs/tasks/tools/)
+- [Helm](https://helm.sh/docs/intro/install/)
 
 ---
 
 ## 🧩 Folder Structure
 
 ```
-.
-├── CounselCat/                  # ASP.NET Core Web API source
-├── Dockerfile                   # Docker build definition
-├── docker-compose.yml           # Optional local run using Compose
-├── k8s/
-│   ├── deployment.yaml          # Kubernetes deployment
-│   └── service.yaml             # Kubernetes service
+CounselCat/
+├── CounselCat/                # ASP.NET Core API project
+├── Dockerfile                 # Docker build file
+├── docker-compose.yml         # Local dev setup
+├── helm/                      # Helm chart directory
+│   ├── Chart.yaml
+│   ├── values.yaml
+│   └── templates/
+│       ├── deployment.yaml
+│       └── service.yaml
 └── README.md
 ```
 
@@ -55,42 +59,26 @@ Visit: [http://localhost:8080/swagger/index.html](http://localhost:8080/swagger/
 
 ## 🚢 Deploy to Kubernetes (Minikube)
 
-### 1. Start Minikube
+1. **Start Minikube:**
+   ```bash
+   minikube start
+   eval $(minikube -p minikube docker-env)
+   ```
 
-```bash
-minikube start
-```
+2. **Build Docker image in Minikube Docker daemon:**
+   ```bash
+   docker build -t counsel-cat:latest .
+   ```
 
-### 2. Point Docker to Minikube's Docker Daemon
+3. **Deploy with Helm:**
+   ```bash
+   helm install counsel-cat ./helm
+   ```
 
-```bash
-eval $(minikube -p minikube docker-env)
-```
-
-### 3. Build Docker Image Inside Minikube
-
-```bash
-docker build -t counsel-cat:latest .
-```
-
-### 4. Switch Back to Host Docker (Optional)
-
-```bash
-eval $(minikube -p minikube docker-env -u)
-```
-
-### 5. Apply Kubernetes Deployment & Service
-
-```bash
-kubectl apply -f k8s/deployment.yaml
-kubectl apply -f k8s/service.yaml
-```
-
-### 6. Access the App via Browser
-
-```bash
-minikube service counsel-cat-service
-```
+4. **Expose the service:**
+   ```bash
+   minikube service counsel-cat-service
+   ```
 
 > This will open your browser to the exposed service. You should see the Swagger UI.
 
@@ -122,10 +110,24 @@ kubectl delete -f k8s/
 
 ## 🧼 Cleanup
 
+To delete Helm release and cleanup Kubernetes resources:
+
 ```bash
-minikube stop
-minikube delete
+helm uninstall counsel-cat
 ```
+
+To delete everything in default namespace:
+
+```bash
+kubectl delete all --all
+```
+---
+
+## 📦 Helm Chart Info
+
+- `Chart.yaml`: Contains metadata about the Helm chart.
+- `values.yaml`: Defines default configuration values.
+- `templates/`: Contains Kubernetes manifest templates for deployment and service.
 
 ---
 

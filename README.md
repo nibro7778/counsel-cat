@@ -1,7 +1,7 @@
 
 # 🐱 Counsel Cat - ASP.NET Core Web API
 
-This project is a sample .NET 8 Web API application containerized with Docker, deployed using Kubernetes via Helm, and provisioned with infrastructure on AWS using Terraform. It supports ECR image storage and remote state management via S3.
+This project is a sample .NET 8 Web API application containerized with Docker, deployed using Kubernetes via Helm, and provisioned with infrastructure on AWS using Terraform.
 
 ---
 
@@ -9,9 +9,9 @@ This project is a sample .NET 8 Web API application containerized with Docker, d
 
 - ASP.NET Core 8.0
 - Dockerized build
-- Swagger UI for API testing
-- Kubernetes deployment
-- Local access via browser using Minikube service
+- Kubernetes deployment 
+- AWS (S3, DynamoDB, ECR, EKS)
+- Github Actions (CI/CD)
 
 ---
 
@@ -48,6 +48,10 @@ CounselCat/
 │   └── templates/
 │       ├── deployment.yaml
 │       └── service.yaml
+|
+|── .github/workflows/       # GitHub Actions CI/CD pipelines
+|   ├── app-cicd.yaml
+|   └── infra-cicd.yaml
 └── README.md
 ```
 
@@ -91,31 +95,6 @@ Visit: [http://localhost:8080/swagger/index.html](http://localhost:8080/swagger/
 > This will open your browser to the exposed service. You should see the Swagger UI.
 
 ---
-
-## 📦 Environment Variables Used
-
-- `ASPNETCORE_ENVIRONMENT=Development`
-- `ASPNETCORE_URLS=http://+:80`
-
-These are defined in the Kubernetes `deployment.yaml`.
-
----
-
-## 📚 Helpful Commands
-
-```bash
-# See running pods
-kubectl get pods
-
-# Describe a pod
-kubectl describe pod <pod-name>
-
-# Delete deployment and service
-kubectl delete -f k8s/
-```
-
----
-
 ## 🧼 Cleanup
 
 To delete Helm release and cleanup Kubernetes resources:
@@ -131,12 +110,37 @@ kubectl delete all --all
 ```
 ---
 
-## 📦 Helm Chart Info
+## ☁️ Cloud Infrastructure Overview
 
-- `Chart.yaml`: Contains metadata about the Helm chart.
-- `values.yaml`: Defines default configuration values.
-- `templates/`: Contains Kubernetes manifest templates for deployment and service.
+Provisioned using Terraform:
 
+- Amazon ECR for container images
+- Amazon S3, DynamoDB for Terraform state storage
+- (Optional) VPC, EKS, IAM roles, and more...
+
+---
+
+## 🔐 AWS Requirements
+
+Before running Terraform:
+
+- Install and configure AWS CLI
+- Ensure you have:
+  - An S3 bucket: `counsel-cat-terraform-state-bucket` and A DynamoDB table `terraform-locks` for locking
+  - IAM user or role with appropriate permissions
+---
+
+## 📦 Terraform Commands
+
+```bash
+cd infra/
+
+# Initialize Terraform
+terraform init
+
+# Apply infrastructure changes
+terraform apply
+```
 ---
 
 ## 🙌 Contribution

@@ -3,7 +3,8 @@ terraform {
     bucket         = "counsel-cat-terraform-state-bucket"
     key            = "terraform.tfstate"
     region         = "ap-southeast-2"
-    use_lockfile = true
+    dynamodb_table = "terraform-locks"    # DynamoDB table to use for state locking
+    acl            = "bucket-owner-full-control" # S3 ACL (adjust as needed)
     encrypt        = true
   }
 }

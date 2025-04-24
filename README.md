@@ -1,7 +1,7 @@
 
 # 🐱 Counsel Cat - ASP.NET Core Web API
 
-Counsel Cat is a sample ASP.NET Core Web API application containerized using Docker and deployed on Kubernetes. This guide provides step-by-step instructions for running the app locally using Docker and Kubernetes (via Minikube), and deploying it using Helm.
+This project is a sample .NET 8 Web API application containerized with Docker, deployed using Kubernetes via Helm, and provisioned with infrastructure on AWS using Terraform. It supports ECR image storage and remote state management via S3.
 
 ---
 
@@ -19,22 +19,30 @@ Counsel Cat is a sample ASP.NET Core Web API application containerized using Doc
 
 Make sure you have the following installed:
 
-- [.NET SDK](https://dotnet.microsoft.com/download)
-- [Docker](https://www.docker.com/)
+- [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download)
+- [Docker](https://docs.docker.com/get-docker/)
 - [Minikube](https://minikube.sigs.k8s.io/docs/start/)
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/)
 - [Helm](https://helm.sh/docs/intro/install/)
-
+- [Terraform](https://developer.hashicorp.com/terraform/install)
+- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) (Configured with credentials)
 ---
 
 ## 🧩 Folder Structure
 
 ```
 CounselCat/
-├── CounselCat/                # ASP.NET Core API project
-├── Dockerfile                 # Docker build file
-├── docker-compose.yml         # Local dev setup
-├── helm/                      # Helm chart directory
+├── CounselCat/               # .NET Web API project
+├── infra/                    # Terraform infrastructure code
+│   ├── main.tf
+│   ├── variables.tf
+│   ├── backend.tf
+│   ├── provider.tf
+│   └── modules/
+│       └── ecr/
+│           ├── main.tf
+│           └── variables.tf
+├── helm/                     # Helm chart for Kubernetes deployment
 │   ├── Chart.yaml
 │   ├── values.yaml
 │   └── templates/

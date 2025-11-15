@@ -2,10 +2,9 @@ version: '3.8'
 
 services:
   counsel-cat:
-    container_name: counsel-cat
+    image: counsel-cat
     build:
         context: .
-    image: counsel-cat:latest
     ports:
       - "8080:80"    # Maps host port 8080 to container's port 80
     environment:
